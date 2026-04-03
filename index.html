@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCERC Employee Management</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <img src="logo.jpg" alt="NCERC Logo" class="splash-logo">
+        <h1 class="splash-title animate-fade-up">NEHRU COLLEGE EMPLOYEE PLATFORM</h1>
+        <div class="splash-loader animate-fade-in delay-1"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand" onclick="app.navigate('home')">
+            <img src="logo.jpg" alt="NCERC Logo" class="nav-logo">
+            <span class="nav-title">NEHRU COLLEGE OF ENGINEERING AND RESEARCH CENTRE</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn" onclick="app.navigate('home')">Home</button>
+            <button class="nav-btn primary" onclick="app.navigate('employee-register')">Register as Employee</button>
+            <button class="nav-btn" onclick="app.navigate('employee-login')">Employee Login</button>
+            <button class="nav-btn admin-link" onclick="app.navigate('admin-login')">Admin Login</button>
+            <button class="nav-btn db-link hidden" onclick="app.navigate('admin-dashboard')">Admin DB</button>
+            <button class="nav-btn emp-link hidden" onclick="app.navigate('employee-dashboard')">My Dashboard</button>
+            <button class="nav-btn auth-link hidden" onclick="app.logout()">Logout</button>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main id="app-container">
+        
+        <!-- HOME VIEW -->
+        <section id="view-home" class="view active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="animate-fade-up">WELCOME TO <br><span class="highlight">NEHRU COLLEGE EMPLOYEE MANAGMENT SYSTEM</span></h1>
+                    <p class="animate-fade-up delay-1">A seamless platform for professionals seeking opportunities and administrators managing talent.</p>
+                    <div class="hero-buttons animate-fade-up delay-2">
+                        <button class="btn btn-primary" onclick="app.navigate('employee-register')">Register as Employee</button>
+                        <button class="btn btn-secondary" onclick="app.navigate('employee-login')">Employee Login</button>
+                    </div>
+                </div>
+                <div class="hero-visual animate-fade-in delay-3">
+                    <img src="hero-bg.jpg" alt="Hero Illustration" style="width: 100%; height: 100%; object-fit: cover; border-radius: 1rem; box-shadow: var(--shadow-lg);">
+                </div>
+            </div>
+
+            <div class="features-wrapper">
+                <div class="features-grid">
+                    <div class="feature-card animate-slide-up">
+                        <i class="fa-solid fa-rocket"></i>
+                        <h3>Fast Application</h3>
+                        <p>Submit your details in minutes with our streamlined registration process.</p>
+                    </div>
+                    <div class="feature-card animate-slide-up delay-1">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>Secure Management</h3>
+                        <p>Robust and secure administrator dashboard to manage all applications safely.</p>
+                    </div>
+                    <div class="feature-card animate-slide-up delay-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <h3>Premium UI</h3>
+                        <p>Experience smooth animations and a responsive, beautiful interface.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPLOYEE REGISTER VIEW -->
+        <section id="view-employee-register" class="view">
+            <div class="form-container animate-scale-up">
+                <div class="form-header">
+                    <h2>Employee Registration</h2>
+                    <p>Register as an internal employee for the portal.</p>
+                </div>
+                
+                <form id="employee-register-form" onsubmit="event.preventDefault(); app.registerAsEmployee();">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <input type="text" id="emp-reg-name" required placeholder=" ">
+                            <label for="emp-reg-name">Full Name</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="emp-reg-email" required placeholder=" ">
+                            <label for="emp-reg-email">Email Address</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="emp-reg-department" required placeholder=" ">
+                            <label for="emp-reg-department">Department</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="emp-reg-class" required placeholder=" ">
+                            <label for="emp-reg-class">Class</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="emp-reg-subject" required placeholder=" ">
+                            <label for="emp-reg-subject">Subject</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" id="emp-reg-salary" required placeholder=" ">
+                            <label for="emp-reg-salary">Salary</label>
+                        </div>
+                        <div class="input-group full-width">
+                            <input type="password" id="emp-reg-password" required placeholder=" ">
+                            <label for="emp-reg-password">Account Password</label>
+                        </div>
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary btn-block">Complete Registration <i class="fa-solid fa-user-plus"></i></button>
+                    </div>
+                </form>
+
+                <!-- Success Message -->
+                <div id="employee-register-success" class="success-message hidden">
+                    <div class="success-icon">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3>Registration Successful!</h3>
+                    <p>You can now log in using your employee credentials.</p>
+                    <button class="btn btn-secondary" onclick="app.navigate('employee-login')">Proceed to Login</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- EMPLOYEE LOGIN VIEW -->
+        <section id="view-employee-login" class="view">
+            <div class="login-container animate-scale-up">
+                <div class="login-header">
+                    <div class="lock-icon"><i class="fa-solid fa-user"></i></div>
+                    <h2>Employee Login</h2>
+                    <p>Access your personal employee portal</p>
+                </div>
+                
+                <form id="employee-login-form" onsubmit="event.preventDefault(); app.loginAsEmployee();">
+                    <div class="input-group">
+                        <input type="email" id="emp-login-email" required placeholder=" ">
+                        <label for="emp-login-email">Email Address</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="emp-login-password" required placeholder=" ">
+                        <label for="emp-login-password">Password</label>
+                    </div>
+                    
+                    <div id="emp-login-error" class="error-text hidden">Invalid email or password.</div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Login <i class="fa-solid fa-right-to-bracket"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- LOGIN VIEW -->
+        <section id="view-admin-login" class="view">
+            <div class="login-container animate-scale-up">
+                <div class="login-header">
+                    <div class="lock-icon"><i class="fa-solid fa-lock"></i></div>
+                    <h2>Administrator Login</h2>
+                    <p>Access the management dashboard</p>
+                </div>
+                
+                <form id="login-form" onsubmit="event.preventDefault(); app.login();">
+                    <div class="input-group">
+                        <input type="text" id="login-username" required placeholder=" ">
+                        <label for="login-username">Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-password" required placeholder=" ">
+                        <label for="login-password">Password</label>
+                    </div>
+                    
+                    <div id="login-error" class="error-text hidden">Invalid username or password. (Hint: admin / password)</div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Secure Login <i class="fa-solid fa-right-to-bracket"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- EMPLOYEE DASHBOARD VIEW -->
+        <section id="view-employee-dashboard" class="view">
+            <div class="dashboard-container animate-fade-in">
+                <div class="dashboard-header">
+                    <h2>My Employee Profile</h2>
+                    <p>View and update your personal details</p>
+                </div>
+
+                <div class="form-container" style="padding: 2rem; margin: 0; max-width: 100%;">
+                    <form id="employee-profile-form" onsubmit="event.preventDefault(); app.updateEmployeeProfile();">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <input type="text" id="emp-prof-name" required placeholder=" ">
+                                <label for="emp-prof-name" class="active">Full Name</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="emp-prof-email" required placeholder=" " disabled title="Email cannot be changed">
+                                <label for="emp-prof-email" class="active">Email Address</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="emp-prof-department" required placeholder=" ">
+                                <label for="emp-prof-department" class="active">Department</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="emp-prof-class" required placeholder=" ">
+                                <label for="emp-prof-class" class="active">Class</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="emp-prof-subject" required placeholder=" ">
+                                <label for="emp-prof-subject" class="active">Subject</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" id="emp-prof-salary" required placeholder=" " disabled title="Salary is fixed by admin">
+                                <label for="emp-prof-salary" class="active">Salary</label>
+                            </div>
+                        </div>
+                        <div class="form-footer" style="display:flex; justify-content:space-between; align-items:center;">
+                            <span id="emp-prof-msg" style="color: var(--success); font-weight: 500;" class="hidden">Profile updated successfully!</span>
+                            <button type="submit" class="btn btn-primary">Save Changes <i class="fa-solid fa-save"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD VIEW (ADMIN) -->
+        <section id="view-admin-dashboard" class="view">
+            <div class="dashboard-container animate-fade-in">
+                <div class="dashboard-header">
+                    <h2>Admin Dashboard</h2>
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-value" id="stat-total">0</span>
+                                <span class="stat-label">Total Employees</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon new"><i class="fa-solid fa-user-plus"></i></div>
+                            <div class="stat-details">
+                                <span class="stat-value" id="stat-new">0</span>
+                                <span class="stat-label">New Submissions (Today)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="table-controls animate-slide-up">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="Search employees..." oninput="app.filterTable()">
+                        </div>
+                        <div class="filter-box">
+                            <select id="filter-qualification" onchange="app.filterTable()">
+                                <option value="">All Qualifications</option>
+                                <option value="Bachelors">Bachelor's Degree</option>
+                                <option value="Masters">Master's Degree</option>
+                                <option value="PhD">PhD</option>
+                                <option value="Diploma">Diploma</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive animate-slide-up delay-1">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact Info</th>
+                                    <th>Qualification</th>
+                                    <th>Experience</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employee-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                        <div id="empty-table-msg" class="empty-state hidden">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <p>No employees found.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- View/Edit Modal -->
+        <div id="employee-modal" class="modal hidden">
+            <div class="modal-content animate-scale-up">
+                <div class="modal-header">
+                    <h3 id="modal-title">Employee Details</h3>
+                    <button class="close-btn" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js?v=2"></script>
+</body>
+</html>
